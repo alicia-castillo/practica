@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "practica-b04e0": {
+      "hosting": {
+        "practica": [
+          "practica-b04e0"
+        ]
+      }
+    }
+  }
+}

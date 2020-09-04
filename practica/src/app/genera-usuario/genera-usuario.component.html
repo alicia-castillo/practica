@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Alta usuario</h1>
+
+    <form class="form-group" [formGroup]="AltaUsuariosForm" (ngSubmit)="onSubmit()">
+    <label>
+        Usuario:
+    </label>
+        <input class="form-control" type="text" formControlName="usuario">
+    <label for="">
+        Nombre:
+    </label>
+        <input class="form-control" type="text" formControlName="nombre">
+    <label for="">
+        Edad:
+    </label>
+        <input class="form-control" type="number" formControlName="edad">
+   
+    <div formArrayName="correos">
+        <h3>Correos</h3>
+        <button class="btn btn-success" (click)="agregaCorreo()">Agregar correo</button>
+            <div *ngFor="let correo of correos.controls; let i=index">
+                <label>Correo {{i+1}}</label>
+                <input type="email" class="form-control" id=""[formControlName]="i">
+            </div>
+
+    </div>
+    <br>
+    <button type="submit" [disabled]="!AltaUsuariosForm.valid" class="btn btn-info">Guardar</button>
+    </form>
+</div>
