@@ -9,14 +9,14 @@ import { CrudService } from '../services/crud.service';
 })
 export class GeneraUsuarioComponent implements OnInit {
  
-  constructor(private Altausuarios : FormBuilder, crudservice : CrudService) {  }
+  constructor(private Altausuarios : FormBuilder, public crudservice : CrudService) {  }
 
   AltaUsuariosForm = this.Altausuarios.group({
     usuario : ['', Validators.required],
     nombre : [''],
-    edad : [''],
+    edad : ['', Validators.required],
     correos : this.Altausuarios.array([
-        this.Altausuarios.control('')
+        this.Altausuarios.control('', [Validators.required, Validators.email])
     ])
   });
 
@@ -36,9 +36,20 @@ export class GeneraUsuarioComponent implements OnInit {
     usuario['edad'] = this.AltaUsuariosForm.controls['edad'].value;
     usuario['correos'] = this.AltaUsuariosForm.get('correos').value;
     console.warn(usuario);
+    this.crudservice.crea_usuario(usuario).then(res =>{
+      
+      console.log("el usuario es: " + usuario);
+     // this.AltaUsuariosForm.controls['usuario'].value = ""; @
+    }).catch(error => console.log("There's been an error")
+    );
+    this.AltaUsuariosForm.reset(); //Limpia el form
+    (<FormArray>this.AltaUsuariosForm.get('correos')).clear(); //Limpia el arreglo de correos
+    this.correos.push(this.Altausuarios.control('')); //Agrega el principal
   }
    
-  
+  EliminaCorreo(index : number){ //Funciòn para eliminar el input de correo si ya no se necesita
+    (<FormArray>this.AltaUsuariosForm.get('correos')).removeAt(index);
+  }
   
   ngOnInit(): void {
   }

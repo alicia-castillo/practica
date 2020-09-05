@@ -11,14 +11,65 @@
             <th>Eliminar</th>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button class="btn btn-sm btn-warning">modificar</button></td>
-                <td><button class="btn btn-sm btn-danger">eliminar</button></td>
+            <tr *ngFor="let user of usuarios">
+                    <td>{{user.id}} {{user.usuario}}</td>
+                    <td>{{user.nombre}}</td>
+                    <td>{{user.edad}}</td>
+                    <td>{{user.correos}}</td>
+                    <td><button class="btn btn-sm btn-warning" (click)="modifica_usuario(user)" data-toggle="modal" data-target="#exampleModal">modificar</button></td>
+                    <td><button class="btn btn-sm btn-danger" (click)="eliminar_usuario(user.id)">eliminar</button></td>
             </tr>
         </tbody>
     </table>
+
+    <!--ng-template #elseBlock>
+        <div class="form-group">
+            <td><input type="text" class="form-control" [(ngModel)]="user.usuario_editar"></td>
+            <td><input type="text" class="form-control" [(ngModel)]="nombre.usuario_editar"></td>
+            <td><input type="number" name="" id="" class="form-control" [(ngModel)]="user.edad_editar"></td>
+            <td><input type="text" class="form-control" [(ngModel)]="user.correos_editar"></td>
+            <td><button class="btn btn-sm btn-warning" (click)="modifica_usuario(user)">modificar</button></td>
+            <td><button class="btn btn-sm btn-danger" (click)="elimina_usuario(user.id)">eliminar</button></td>
+        </div>
+    </ng-template-->
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"> <!--STARTS MODAL BODY-->
+            <form class="form-group" [formGroup]="ModificaUsuarioForm" >
+                <label>
+                    Usuario:
+                </label>
+                    <input class="form-control" type="text" formControlName="usuario">
+                <label for="">
+                    Nombre:
+                </label>
+                    <input class="form-control" type="text" formControlName="nombre">
+                <label for="">
+                    Edad:
+                </label>
+                    <input class="form-control" type="number" formControlName="edad">
+                <label for="">
+                       Correos:
+                </label>
+                        <input class="form-control" type="text" formControlName="correos">
+                        <input class="form-control" type="hidden" formControlName="id">
+                <br>
+                
+                </form>
+        </div> <!--END MODAL BODY-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" [disabled]="!ModificaUsuarioForm" class="btn btn-info" (click)="actualiza_usuario()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
