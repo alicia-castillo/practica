@@ -20,31 +20,27 @@ export class GeneraUsuarioComponent implements OnInit {
     ])
   });
 
-  get correos(){
+  get correos(){ //obtiene los controles del form para los correos
     return this.AltaUsuariosForm.get('correos') as FormArray;
   }
 
-  agregaCorreo(){
+  agregaCorreo(){ //agrega un nuevo control a la lista
     this.correos.push(this.Altausuarios.control(''));
 }
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
+  onSubmit() { //función llamada para guardar los datos del usuario
     let usuario = {};
     usuario['usuario'] = this.AltaUsuariosForm.controls['usuario'].value;
     usuario['nombre'] = this.AltaUsuariosForm.controls['nombre'].value;
     usuario['edad'] = this.AltaUsuariosForm.controls['edad'].value;
     usuario['correos'] = this.AltaUsuariosForm.get('correos').value;
-    console.warn(usuario);
     this.crudservice.crea_usuario(usuario).then(res =>{
       
-      console.log("el usuario es: " + usuario);
-     // this.AltaUsuariosForm.controls['usuario'].value = ""; @
     }).catch(error => console.log("There's been an error")
     );
     this.AltaUsuariosForm.reset(); //Limpia el form
     (<FormArray>this.AltaUsuariosForm.get('correos')).clear(); //Limpia el arreglo de correos
-    this.correos.push(this.Altausuarios.control('')); //Agrega el principal
+    this.correos.push(this.Altausuarios.control('')); //Agrega un control al arreglo de correos
   }
    
   EliminaCorreo(index : number){ //Funciòn para eliminar el input de correo si ya no se necesita

@@ -11,6 +11,7 @@ export class ModificaUsuarioComponent implements OnInit {
 
   constructor(private ModificaUsuario : FormBuilder, public crudservice : CrudService) { }
   usuarios : any;
+  //Crea reactive form para la modificación
   ModificaUsuarioForm = this.ModificaUsuario.group({
     usuario : ['', Validators.required],
     nombre : [''],
@@ -21,26 +22,23 @@ export class ModificaUsuarioComponent implements OnInit {
 
 
   ngOnInit(): void {
+    //Se obtienen los datos de la coleccion usuarios de firebase llamando get_usuarios() encontrada en el crud.service
     this.crudservice.get_usuarios().subscribe(data => {
-
+      //Se asigna a nuestro dato usuarios previamente declarado el resultado de nuestra llamada al service
       this.usuarios = data.map(u => {
         return {
           id: u.payload.doc.id,
-          isedit: false,
           usuario: u.payload.doc.data()['usuario'],
           nombre: u.payload.doc.data()['nombre'],
           edad: u.payload.doc.data()['edad'],
           correos: u.payload.doc.data()['correos']
         };
       })
-      console.log(this.usuarios);
 
     });
   }
 
-  modifica_usuario(user){
-    console.log("hii" + user.id);
-    let usuario = {};
+  modifica_usuario(user){ //funcion para llenar el form del modal de editar
     this.ModificaUsuarioForm.patchValue({
       usuario : user.usuario,
       nombre : user.nombre,
@@ -50,19 +48,18 @@ export class ModificaUsuarioComponent implements OnInit {
     });  
   }
 
-  actualiza_usuario(){
-    console.log('hiiiiiii' + this.ModificaUsuarioForm.controls['id'].value);
+  actualiza_usuario(){ //funcion llamada para actualizar el usuario 
     let usuario = {};
     usuario['usuario'] = this.ModificaUsuarioForm.controls['usuario'].value;
     usuario['nombre'] = this.ModificaUsuarioForm.controls['nombre'].value;
     usuario['edad'] = this.ModificaUsuarioForm.controls['edad'].value;
-    usuario['correos'] = this.ModificaUsuarioForm.controls['correos'].value;
+    let correosarray = (this.ModificaUsuarioForm.controls['correos'].value + '').split(',');
+    usuario['correos'] = correosarray;
     usuario['id'] = this.ModificaUsuarioForm.controls['id'].value;
     this.crudservice.actualiza_usuario(usuario);
-    console.warn(usuario);
   }
 
-  eliminar_usuario(id : number){
+  eliminar_usuario(id : number){ //funcion para la eliminacion del usuario
     this.crudservice.elimina_usuario(id);
   }
 

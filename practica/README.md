@@ -1,6 +1,13 @@
 # Practica
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
+Developer: Alicia Joselyn Castillo Juarez
+
+## To make it work
+
+Run $ npm install
+Run $ npm install firebase @angular/fire
+Run $ npm install --save bootstrap
 
 ## Development server
 

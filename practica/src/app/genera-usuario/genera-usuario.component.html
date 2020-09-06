@@ -13,14 +13,14 @@
     <label for="">
         Edad:
     </label>
-        <input class="form-control" type="number" formControlName="edad">
+        <input class="form-control" type="number" formControlName="edad" min="1">
    
     <div formArrayName="correos">
         <h3>Correos</h3>
         <button class="btn btn-success" (click)="agregaCorreo()">Agregar correo</button>
             <div *ngFor="let correo of correos.controls; let i=index" class="row">
                 <label class="col col-4">Correo {{i+1}}</label>
-                <input type="email" class="form-control col-6" id="" [formControlName]="i">
+                <input type="email" class="form-control col-6" [formControlName]="i" required>
                 <div class="col col-2" *ngIf="i>0">
                     <button class="btn btn-danger"><span class="trash" title="eliminar correo" (click)="EliminaCorreo(i)">Quitar</span></button>
                 </div>
